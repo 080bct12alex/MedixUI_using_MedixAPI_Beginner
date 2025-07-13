@@ -35,47 +35,69 @@ export default function CreatePatient() {
 
   return (
     <div className="p-6 max-w-xl mx-auto">
-      <h1 className="text-xl font-bold mb-4">Add New Patient</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {Object.keys(formData).map((key) => (
-          <div key={key}>
-            <label className="block mb-1 font-semibold capitalize">{key}</label>
-            {key === "gender" ? (
-              <select
-                name="gender"
-                value={formData.gender}
-                onChange={handleChange}
-                className="w-full border px-2 py-1 rounded"
+      {/* Back Button */}
+      <button
+        onClick={() => router.push("/patients")}
+        className="mb-6 inline-flex items-center text-blue-600 border border-blue-500 px-3 py-1.5 rounded-md hover:bg-blue-50 transition"
+      >
+        ← Back to Patient List
+      </button>
+
+      <div className="bg-white rounded-2xl shadow-md p-8">
+        <h1 className="text-3xl font-semibold mb-8 text-gray-900">
+          Add New Patient
+        </h1>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {Object.keys(formData).map((key) => (
+            <div key={key} className="flex flex-col">
+              <label
+                htmlFor={key}
+                className="mb-2 font-medium text-gray-700 capitalize"
               >
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="others">Others</option>
-              </select>
-            ) : (
-              <input
-                type={
-                  typeof formData[key as keyof typeof formData] === "number"
-                    ? "number"
-                    : "text"
-                }
-                name={key}
-                value={formData[key as keyof typeof formData]}
-                onChange={handleChange}
-                className="w-full border px-2 py-1 rounded"
-                required
-                min={key === "age" ? 1 : undefined}
-                step={key === "height" || key === "weight" ? "0.01" : undefined}
-              />
-            )}
-          </div>
-        ))}
-        <button
-          type="submit"
-          className="bg-green-500 text-white px-4 py-2 rounded"
-        >
-          Create
-        </button>
-      </form>
+                {key.replace(/_/g, " ")}
+              </label>
+
+              {key === "gender" ? (
+                <select
+                  id={key}
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
+                >
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="others">Others</option>
+                </select>
+              ) : (
+                <input
+                  id={key}
+                  type={
+                    typeof formData[key as keyof typeof formData] === "number"
+                      ? "number"
+                      : "text"
+                  }
+                  name={key}
+                  value={formData[key as keyof typeof formData]}
+                  onChange={handleChange}
+                  required
+                  min={key === "age" ? 1 : undefined}
+                  step={key === "height" || key === "weight" ? "0.01" : undefined}
+                  className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
+                />
+              )}
+            </div>
+          ))}
+
+          <button
+            type="submit"
+            className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-md font-semibold transition"
+          >
+            Create Patient
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
