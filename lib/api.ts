@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8000"; // Change if your backend runs elsewhere
+const BASE_URL = "https://medixapi.onrender.com"; // Change if your backend runs elsewhere
 
 export async function fetchPatients() {
   const res = await fetch(`${BASE_URL}/view`);
