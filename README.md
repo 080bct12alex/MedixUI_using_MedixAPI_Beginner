@@ -33,7 +33,7 @@ Visit the deployed frontend:
 - 🛠 Edit patient information
 - 🗑 Delete patient records
 - 📊 Auto-calculate BMI and display health verdict
-- 🧭 Responsive layout with sidebar and navbar
+- 🧭 Responsive UI
 
 
 ---
