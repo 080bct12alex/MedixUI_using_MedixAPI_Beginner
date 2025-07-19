@@ -21,7 +21,7 @@ Visit the deployed frontend:
 
 
 # ⚙️ **Backend (FastAPI):**  
-  [https://github.com/080bct12alex/MedixAPI_Beginner](https://github.com/080bct12alex/MedixAPI_Beginner)
+  [https://github.com/080bct12alex/MedixAPI_Beginner](https://github.com/080bct12alex/MedixAPI)
 
 ---
 
