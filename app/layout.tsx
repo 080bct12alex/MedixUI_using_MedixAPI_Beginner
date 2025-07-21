@@ -1,49 +1,21 @@
 // app/layout.tsx
-"use client";
+import "./globals.css";
+import RootLayoutClient from "./components/RootLayoutClient";
 
-import { useState, useEffect } from "react";
-import "../styles/globals.css";
-
-import Sidebar from "./components/Sidebar";
-import Navbar from "./components/Navbar";
-
+export const metadata = {
+  title: "Medix UI – Patient Management System",
+  description: "A patient management system frontend built with Next.js and FastAPI backend integration.",
+  icons: {
+    icon: "/favicon.ico",
+  },
+  // add more metadata here if needed
+};
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const handleLoginStatusChange = () => {
-      setIsLoggedIn(localStorage.getItem("token") !== null);
-    };
-
-    window.addEventListener('loginStatusChange', handleLoginStatusChange);
-    handleLoginStatusChange(); // Initial check
-
-    return () => {
-      window.removeEventListener('loginStatusChange', handleLoginStatusChange);
-    };
-  }, []);
-
-  const handleLoginStatusChange = (status: boolean) => {
-    setIsLoggedIn(status);
-  };
-
   return (
     <html lang="en">
       <body className="bg-gray-100 text-gray-800 h-screen">
-        <div className="flex flex-col h-full">
-          <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} isLoggedIn={isLoggedIn} onLoginStatusChange={handleLoginStatusChange} />
-
-          <div className="flex flex-1 overflow-hidden">
-            <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} isLoggedIn={isLoggedIn} />
-
-            <main className="flex-1 overflow-y-auto p-4 sm:p-6">
-              {children}
-            </main>
-          </div>
-        </div>
+        <RootLayoutClient>{children}</RootLayoutClient>
       </body>
     </html>
   );
 }
-
