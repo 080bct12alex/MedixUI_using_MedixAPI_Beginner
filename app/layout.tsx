@@ -1,5 +1,6 @@
 // app/layout.tsx
-import "./globals.css";
+import "../styles/globals.css";
+
 import RootLayoutClient from "./components/RootLayoutClient";
 
 export const metadata = {
