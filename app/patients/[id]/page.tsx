@@ -6,14 +6,31 @@ import Link from "next/link";
 import ConfirmDialog from '@/app/components/ConfirmDialog';
 import { fetchPatient, deletePatient } from "@/lib/api";
 
+interface Diagnosis {
+  disease: string;
+  condition: string;
+  diagnosis_on: string;
+  notes: string;
+}
+
+interface Patient {
+  id: string;
+  name: string;
+  city: string;
+  age: number;
+  gender: string;
+  height: number | null;
+  weight: number | null;
+  diagnoses_history: Diagnosis[];
+}
+
 export default function ViewPatient() {
   const { id } = useParams();
   const router = useRouter();
 
-  // Fix: ensure patientId is a string
   const patientId = Array.isArray(id) ? id[0] : id;
 
-  const [patient, setPatient] = useState<any>(null);
+  const [patient, setPatient] = useState<Patient | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -157,7 +174,7 @@ export default function ViewPatient() {
               Diagnosis History
             </h2>
             <div className="space-y-4">
-              {patient.diagnoses_history.map((entry: any, index: number) => (
+              {patient.diagnoses_history.map((entry: Diagnosis, index: number) => (
                 <div key={index} className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                   <p className="text-sm font-medium text-gray-600">Disease: <span className="font-normal text-gray-900">{entry.disease}</span></p>
                   <p className="text-sm font-medium text-gray-600">Condition: <span className="font-normal text-gray-900">{entry.condition}</span></p>

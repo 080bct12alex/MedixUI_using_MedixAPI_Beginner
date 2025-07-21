@@ -4,9 +4,27 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createPatient } from "@/lib/api";
 
+interface Diagnosis {
+  disease: string;
+  condition: string;
+  diagnosis_on: string;
+  notes: string;
+}
+
+interface Patient {
+  id: string;
+  name: string;
+  city: string;
+  age: number;
+  gender: string;
+  height: number | null;
+  weight: number | null;
+  diagnoses_history: Diagnosis[];
+}
+
 export default function CreatePatient() {
   const router = useRouter();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Patient>({
     id: "",
     name: "",
     city: "",
@@ -17,7 +35,7 @@ export default function CreatePatient() {
     diagnoses_history: [],
   });
 
-  const [currentDiagnosis, setCurrentDiagnosis] = useState({
+  const [currentDiagnosis, setCurrentDiagnosis] = useState<Diagnosis>({
     disease: '',
     condition: '',
     diagnosis_on: new Date().toISOString().split('T')[0],

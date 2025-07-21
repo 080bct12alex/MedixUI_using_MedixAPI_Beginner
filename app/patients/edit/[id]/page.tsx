@@ -4,15 +4,33 @@ import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { fetchPatient, updatePatient } from "@/lib/api";
 
+interface Diagnosis {
+  disease: string;
+  condition: string;
+  diagnosis_on: string;
+  notes: string;
+}
+
+interface Patient {
+  id: string;
+  name: string;
+  city: string;
+  age: number;
+  gender: string;
+  height: number | null;
+  weight: number | null;
+  diagnoses_history: Diagnosis[];
+}
+
 export default function EditPatient() {
   const router = useRouter();
   const { id } = useParams();
 
   const patientId = Array.isArray(id) ? id[0] : id;
 
-  const [formData, setFormData] = useState<any>(null);
+  const [formData, setFormData] = useState<Patient | null>(null);
 
-  const [currentDiagnosis, setCurrentDiagnosis] = useState({
+  const [currentDiagnosis, setCurrentDiagnosis] = useState<Diagnosis>({
     disease: '',
     condition: '',
     diagnosis_on: new Date().toISOString().split('T')[0],
@@ -30,15 +48,15 @@ export default function EditPatient() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 
-    let parsedValue: string | number = value;
+    let parsedValue: string | number | null = value;
     if (name === "age" || name === "height" || name === "weight") {
-      parsedValue = value === "" ? "" : parseFloat(value);
+      parsedValue = value === "" ? null : parseFloat(value);
     }
 
-    setFormData({
-      ...formData,
+    setFormData(prev => prev ? {
+      ...prev,
       [name]: parsedValue,
-    });
+    } : null);
   };
 
   const handleDiagnosisChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -47,10 +65,13 @@ export default function EditPatient() {
   };
 
   const handleAddDiagnosis = () => {
-    setFormData((prev: any) => ({
-      ...prev,
-      diagnoses_history: [...prev.diagnoses_history, currentDiagnosis],
-    }));
+    setFormData((prev) => {
+      if (!prev) return null;
+      return {
+        ...prev,
+        diagnoses_history: [...prev.diagnoses_history, currentDiagnosis],
+      };
+    });
     setCurrentDiagnosis({
       disease: '',
       condition: '',
@@ -60,15 +81,18 @@ export default function EditPatient() {
   };
 
   const handleRemoveDiagnosis = (index: number) => {
-    setFormData((prev: any) => ({
-      ...prev,
-      diagnoses_history: prev.diagnoses_history.filter((_: any, i: number) => i !== index),
-    }));
+    setFormData((prev) => {
+      if (!prev) return null;
+      return {
+        ...prev,
+        diagnoses_history: prev.diagnoses_history.filter((_: any, i: number) => i !== index),
+      };
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!patientId) return;
+    if (!patientId || !formData) return;
 
     await updatePatient(patientId, formData);
     router.push("/patients");
