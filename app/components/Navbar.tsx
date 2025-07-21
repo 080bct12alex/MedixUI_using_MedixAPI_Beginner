@@ -2,11 +2,29 @@
 
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
 type NavbarProps = {
   onToggleSidebar: () => void;
+  isLoggedIn: boolean;
+  onLoginStatusChange: (status: boolean) => void;
 };
 
-export default function Navbar({ onToggleSidebar }: NavbarProps) {
+export default function Navbar({ onToggleSidebar, isLoggedIn, onLoginStatusChange }: NavbarProps) {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    onLoginStatusChange(false);
+    window.dispatchEvent(new Event('loginStatusChange'));
+    router.push("/auth/login");
+  };
+
+  const handleLogin = () => {
+    router.push("/auth/login");
+  };
+
   return (
     <header className="h-16 bg-white border-b shadow-sm flex items-center px-4 sm:px-6 justify-between">
       {/* Left: Hamburger + title */}
@@ -24,7 +42,17 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
         <h1 className="text-xl font-bold text-blue-600 whitespace-nowrap">🏥 Patient Manager</h1>
       </div>
 
-      <span className=" text-sm text-gray-600">Welcome, Doctor</span>
+      <div className="flex items-center gap-4">
+        {isLoggedIn ? (
+          <button onClick={handleLogout} className="text-red-500 hover:underline">
+            Logout
+          </button>
+        ) : (
+          <button onClick={handleLogin} className="text-blue-600 hover:underline">
+            Login
+          </button>
+        )}
+      </div>
     </header>
   );
 }

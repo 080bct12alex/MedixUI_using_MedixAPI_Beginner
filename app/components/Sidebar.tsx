@@ -4,20 +4,24 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import { useEffect, useState } from "react";
 
 type SidebarProps = {
   isOpen: boolean;
   onClose: () => void;
+  isLoggedIn: boolean;
 };
 
-export default function Sidebar({ isOpen, onClose }: SidebarProps) {
+export default function Sidebar({ isOpen, onClose, isLoggedIn }: SidebarProps) {
   const pathname = usePathname();
 
   const links = [
     { href: "/", label: "Dashboard" },
-    { href: "/patients", label: "Patients" },
-    { href: "/patients/create", label: "Add Patient" },
   ];
+
+  if (isLoggedIn) {
+    links.push({ href: "/patients", label: "Patients" });
+  }
 
   return (
     <>

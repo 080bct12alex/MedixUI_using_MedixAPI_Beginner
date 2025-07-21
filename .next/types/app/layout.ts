@@ -1,4 +1,4 @@
-// File: C:\Users\Dell\Desktop\fast api project\MedixUI\app\layout.tsx
+// File: C:\Users\Dell\Desktop\medix\Frontend\app\layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

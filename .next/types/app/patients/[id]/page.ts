@@ -1,4 +1,4 @@
-// File: C:\Users\Dell\Desktop\fast api project\MedixUI\app\patients\[id]\page.tsx
+// File: C:\Users\Dell\Desktop\medix\Frontend\app\patients\[id]\page.tsx
 import * as entry from '../../../../../app/patients/[id]/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
