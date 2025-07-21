@@ -1,8 +1,0 @@
-{
-  "/patients/page": "app/patients/page.js",
-  "/auth/login/page": "app/auth/login/page.js",
-  "/patients/[id]/page": "app/patients/[id]/page.js",
-  "/patients/edit/[id]/page": "app/patients/edit/[id]/page.js",
-  "/auth/register/page": "app/auth/register/page.js",
-  "/page": "app/page.js"
-}
